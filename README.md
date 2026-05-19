@@ -1,8 +1,10 @@
 <h1 align="center">Peeky</h1>
 
+![Peeky logo](chrome/static/icon128.png "Peeky")
+
 > Preview links in a minimal floating overlay with Shift+Click, inspired by Arc browser's Peek feature.
 
-Peeky is a stripped-down, performance-focused fork of [BerryPeek](https://github.com/Kain-90/BerryPeek). It keeps the core idea — Shift+Click any link to preview it in a floating iframe — and removes the rest: no header bar, no theming, no drag/resize, no animations.
+Peeky is a clean, stripped-down, performance-focused fork of [BerryPeek](https://github.com/Kain-90/BerryPeek). It keeps the core — Shift+Click any link to preview it in a floating iframe — and removes the rest: no header bar, no theming, no drag/resize, no animations.
 
 ## Supported browsers
 
@@ -10,19 +12,14 @@ Works with any Chromium-based browser (Chrome, Edge, Brave, Opera, Arc, Comet, e
 
 ## Features
 
+pt+W) 
 - **Shift+Click** any link to open it in a centred floating preview
 - **Enter** or the top button promotes the preview to a real new tab
 - **Esc**, the X button, or clicking the dimmed backdrop dismisses the preview
-- **Alt+W** closes the preview from anywhere (works even when focus is inside the previewed page)
-- **Alt+O** opens the preview as a real tab from anywhere
+- **Alt+W** (Opt+W) closes the preview from anywhere (works even when focus is inside the previewed page)
+- **Alt+O** (Opt+O) opens the preview as a real tab from anywhere
 - Smart `X-Frame-Options` detection — if a site can't be framed, it opens in a new tab automatically
 - Minimal UI: just the iframe, two circular action buttons, and a faint dimmed backdrop
-
-## Layout
-
-- 6 px gap from the top and bottom of the viewport
-- Horizontal margins of 1⁄6 of the viewport width on each side
-- Action buttons sit in the right gutter, top-aligned with the iframe
 
 ## Installation (from source)
 
@@ -33,6 +30,7 @@ Works with any Chromium-based browser (Chrome, Edge, Brave, Opera, Arc, Comet, e
    ```
 
 2. Open your browser's extensions page:
+   - Helium: `helium://extensions/`
    - Chrome: `chrome://extensions/`
    - Edge: `edge://extensions/`
    - Brave: `brave://extensions/`
@@ -49,10 +47,10 @@ To update later, pull the latest changes and press the reload button on the exte
 ## Usage
 
 1. Hold `Shift` and click any link.
-2. The page loads in a floating overlay.
+2. The linked page loads in a floating overlay.
 3. Press `Enter` or click the upper button to open it as a full tab; press `Esc`, click the lower button, or click the dimmed area to dismiss.
 
-If you click into the previewed page, keyboard focus moves there and `Esc`/`Enter` won't reach the overlay (this is a browser-enforced security boundary on cross-origin iframes). Use `Alt+W` to close or `Alt+O` to open as a tab from any focus state. The shortcuts can be rebound in `chrome://extensions/shortcuts`.
+If you click into the previewed page, keyboard focus moves there and `Esc`/`Enter` won't reach the overlay (this is a browser-enforced security boundary on cross-origin iframes). Use `Alt+W` (`Opt+W`) to close or `Alt+O` (`Opt+O`) to open as a tab from any focus state. The shortcuts can be rebound in `chrome://extensions/shortcuts`.
 
 ## Project structure
 
