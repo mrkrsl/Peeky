@@ -14,6 +14,20 @@
   "background": {
     "service_worker": "background.js"
   },
+  "commands": {
+    "close-peek": {
+      "suggested_key": {
+        "default": "Alt+W"
+      },
+      "description": "Close the Peeky preview overlay"
+    },
+    "open-peek-in-tab": {
+      "suggested_key": {
+        "default": "Alt+O"
+      },
+      "description": "Open the current Peeky preview in a new tab"
+    }
+  },
   "icons": {
     "16": "static/icon.png",
     "32": "static/icon.png",

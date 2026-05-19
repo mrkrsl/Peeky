@@ -1,5 +1,17 @@
 BLOCK_DOMAINS = ["t.co"];
 
+// Forward command shortcuts to the active tab's content script
+chrome.commands.onCommand.addListener((command) => {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const tab = tabs && tabs[0];
+    if (!tab || tab.id === undefined) return;
+    chrome.tabs.sendMessage(tab.id, { type: "peekyCommand", command }, () => {
+      // Swallow lastError when no content script is listening (e.g. chrome:// pages)
+      void chrome.runtime.lastError;
+    });
+  });
+});
+
 // Check frame restrictions for URLs
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === "checkFrameRestriction") {

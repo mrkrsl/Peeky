@@ -26,6 +26,16 @@
   -webkit-backdrop-filter: blur(2px);
   pointer-events: auto;
   outline: none;
+  opacity: 0;
+  transition: opacity 150ms ease-out;
+}
+
+#peeky-overlay.peeky-visible {
+  opacity: 1;
+}
+
+#peeky-overlay.peeky-closing {
+  opacity: 0;
 }
 
 #peeky-container {

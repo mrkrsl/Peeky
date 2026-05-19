@@ -11,8 +11,10 @@ Works with any Chromium-based browser (Chrome, Edge, Brave, Opera, Arc, Comet, e
 ## Features
 
 - **Shift+Click** any link to open it in a centred floating preview
-- **Enter** or the top-right button promotes the preview to a real new tab
+- **Enter** or the top button promotes the preview to a real new tab
 - **Esc**, the X button, or clicking the dimmed backdrop dismisses the preview
+- **Alt+W** closes the preview from anywhere (works even when focus is inside the previewed page)
+- **Alt+O** opens the preview as a real tab from anywhere
 - Smart `X-Frame-Options` detection — if a site can't be framed, it opens in a new tab automatically
 - Minimal UI: just the iframe, two circular action buttons, and a faint dimmed backdrop
 
@@ -49,6 +51,8 @@ To update later, pull the latest changes and press the reload button on the exte
 1. Hold `Shift` and click any link.
 2. The page loads in a floating overlay.
 3. Press `Enter` or click the upper button to open it as a full tab; press `Esc`, click the lower button, or click the dimmed area to dismiss.
+
+If you click into the previewed page, keyboard focus moves there and `Esc`/`Enter` won't reach the overlay (this is a browser-enforced security boundary on cross-origin iframes). Use `Alt+W` to close or `Alt+O` to open as a tab from any focus state. The shortcuts can be rebound in `chrome://extensions/shortcuts`.
 
 ## Project structure
 

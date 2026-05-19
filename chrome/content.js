@@ -49,7 +49,7 @@
 
     const openButton = document.createElement("button");
     openButton.className = "peeky-button peeky-button-open";
-    openButton.title = "Open in new tab (Enter)";
+    openButton.title = "Open in new tab (Enter / Alt+O)";
     const openIcon = document.createElement("img");
     openIcon.src = chrome.runtime.getURL("static/open.svg");
     openIcon.alt = "Open";
@@ -62,7 +62,7 @@
 
     const closeButton = document.createElement("button");
     closeButton.className = "peeky-button peeky-button-close";
-    closeButton.title = "Close (Esc)";
+    closeButton.title = "Close (Esc / Alt+W)";
     const closeIcon = document.createElement("img");
     closeIcon.src = chrome.runtime.getURL("static/close.svg");
     closeIcon.alt = "Close";
@@ -140,19 +140,37 @@
     shadowRoot.appendChild(overlay);
     document.body.appendChild(shadowHost);
 
+    // Trigger the 150ms opacity fade-in on the next frame so the transition
+    // animates from the initial opacity:0 state defined in CSS.
+    requestAnimationFrame(() => {
+      overlay.classList.add("peeky-visible");
+    });
+
     // Take initial keyboard focus so Esc/Enter work immediately, before the
     // iframe finishes loading and tries to steal focus.
     overlay.focus({ preventScroll: true });
 
-    currentPeekWindow = { shadowHost, keyHandler, messageHandler: onMessage };
+    currentPeekWindow = {
+      shadowHost,
+      keyHandler,
+      messageHandler: onMessage,
+      openInTab,
+    };
   }
 
   function closePeekWindow() {
     if (!currentPeekWindow) return;
-    currentPeekWindow.shadowHost.remove();
-    window.removeEventListener("keydown", currentPeekWindow.keyHandler, true);
-    window.removeEventListener("message", currentPeekWindow.messageHandler);
+    const peekRef = currentPeekWindow;
     currentPeekWindow = null;
+    // Detach listeners first so no further events can re-enter close logic.
+    window.removeEventListener("keydown", peekRef.keyHandler, true);
+    window.removeEventListener("message", peekRef.messageHandler);
+    // Start the fade-out then remove the shadow host after the transition.
+    const overlay = peekRef.shadowHost.shadowRoot.getElementById("peeky-overlay");
+    if (overlay) overlay.classList.add("peeky-closing");
+    setTimeout(() => {
+      peekRef.shadowHost.remove();
+    }, 150);
   }
 
   // Render the overlay immediately and run the frame-restriction check in parallel
@@ -186,6 +204,13 @@
   chrome.runtime.onMessage.addListener((message) => {
     if (message.type === "showPeek" && message.url) {
       peek(message.url);
+    } else if (message.type === "peekyCommand") {
+      if (!currentPeekWindow) return;
+      if (message.command === "close-peek") {
+        closePeekWindow();
+      } else if (message.command === "open-peek-in-tab") {
+        currentPeekWindow.openInTab();
+      }
     }
   });
 
