@@ -82,11 +82,11 @@
       if (e.target === overlay) closePeekWindow();
     };
 
-    // When the mouse re-enters the dim backdrop or hovers our buttons (after
-    // the user clicked into the cross-origin iframe and stole focus),
-    // reclaim focus so Esc works again. Cross-origin focus can't be observed
-    // directly, so we use mouse re-entry as the trigger.
+    // When the mouse leaves the iframe area (back onto the dim backdrop or
+    // our buttons) reclaim focus so Esc works again. Cross-origin focus
+    // can't be observed directly, so we use mouse-leave as the trigger.
     const reclaimFocus = () => overlay.focus({ preventScroll: true });
+    iframe.addEventListener("mouseleave", reclaimFocus);
     overlay.addEventListener("mouseenter", reclaimFocus);
     buttonContainer.addEventListener("mouseenter", reclaimFocus);
 
